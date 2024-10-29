@@ -5,14 +5,29 @@ import { CiHeart } from "react-icons/ci";
 import { FaPencil } from "react-icons/fa6";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { FcLike } from "react-icons/fc";
+import { useState } from "react";
 
 const Card = (value) => {
   const { email, id, imgurl, name, phone, url } = value.value;
+  const { handleShowModal } = value;
+  const { handleId } = value;
+
+  const [isred, setIsred] = useState(false);
+
+  const handleRed = () => {
+    setIsred(!isred);
+
+    // if (isred === true) {
+    //   setIsred(false);
+    // } else if (isred === false) {
+    //   setIsred(true);
+    // }
+  };
 
   return (
     <div className="border-2 border-black h-fit w-[300px]">
       <div className="bg-[#f5f5f5] flex justify-center items-center">
-        <img src={imgurl} alt="" />
+        <img className="h-[297px] w-[297px]" src={imgurl} alt="" />
       </div>
 
       <div className="p-4">
@@ -31,13 +46,22 @@ const Card = (value) => {
         </div>
       </div>
       <div className="bg-[#f5f5f5] flex justify-between  ">
-        <div className="border-r-2 p-4 w-1/3 flex  justify-center">
-          <CiHeart />
+        <div
+          onClick={handleRed}
+          className="border-r-2 p-4 w-1/3 flex  justify-center cursor-pointer"
+        >
+          {isred ? <FcLike /> : <CiHeart />}
         </div>
-        <div className="border-r-2 p-4 w-1/3 flex justify-center">
+        <div
+          onClick={() => {
+            handleShowModal(true);
+            handleId(id);
+          }}
+          className="border-r-2 p-4 w-1/3 flex justify-center cursor-pointer"
+        >
           <FaPencil />
         </div>
-        <div className="border-r-2 p-4 w-1/3 flex justify-center">
+        <div className="border-r-2 p-4 w-1/3 flex justify-center cursor-pointer">
           <IoTrashBinSharp />
         </div>
       </div>
